@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -37,5 +26,3 @@ Route::post('{year}/scores/{formNumber}/{suffix?}', 'ScoreController@store')->na
 Route::get('{year}/stats/ratio-category', 'Stats\RatingCategoryController@ratio')->name('stats.rating-category.ratio');
 Route::get('{year}/stats/category/{ratingId}', 'Stats\RatingCategoryController@scoresByRating')->name('stats.category.scores');
 Route::get('/stats/group/{groupId}/category/{ratingCategoryId}', 'Stats\GroupController@ratingByCategoryAndGroup')->name('stats.group.category');
-
-

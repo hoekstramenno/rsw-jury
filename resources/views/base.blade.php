@@ -29,7 +29,7 @@
                     <a class="nav-link" href="#">Jaren <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('groups.index', ['year' => $currentYear]) }}">Groepen</a>
+                    <a class="nav-link" href="{{ route('groups.index') }}">Groepen</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('ratings.index', ['year' => $currentYear]) }}">Beoordelingen</a>

@@ -30,14 +30,10 @@ class HikeScore
         return $this->team;
     }
 
-    public function getTotalScore()
+    public function getTotalScore(): int
     {
-        return collect($this->scores)->reduce(
-            static function ($carry, $score) {
-                $carry += $score;
-
-                return $carry;
-            }
-        );
+        return collect($this->scores)->reduce(function ($carry, $score) {
+            return $carry + $score;
+        });
     }
 }

@@ -16,7 +16,7 @@ class Adapter extends AbstractAdapter
      *
      * @var array
      */
-    protected $attributes = [];
+    protected $attributes;
 
     /**
      * Adapter constructor.
@@ -28,6 +28,11 @@ class Adapter extends AbstractAdapter
         parent::__construct(new RatingCategory(), $paging);
     }
 
+    public function ratings(): HasMany
+    {
+        return $this->hasMany('ratings');
+    }
+
     /**
      * @param Builder $query
      * @param Collection $filters
@@ -37,10 +42,4 @@ class Adapter extends AbstractAdapter
     {
         // TODO
     }
-
-    public function ratings(): HasMany
-    {
-        return $this->hasMany('ratings');
-    }
-
 }

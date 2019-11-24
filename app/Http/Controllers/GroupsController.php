@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Models\RatingCategory;
 
-class GroupsController
+class GroupsController extends Controller
 {
     public function index()
     {
@@ -16,7 +16,7 @@ class GroupsController
         ]);
     }
 
-    public function show(int $id)
+    public function show(string $id)
     {
         $group      = Group::with('teams.scores')->where('id', $id)->firstOrFail();
         $categories = RatingCategory::orderBy('id', 'asc')->get()->pluck('name');

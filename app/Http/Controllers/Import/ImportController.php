@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Import;
 
+use App\Http\Controllers\Controller;
 use App\Models\Rating;
 use App\Models\Score;
 use App\Models\Team;
 
-class ImportController
+class ImportController  extends Controller
 {
-    protected $csv = "1,2,3,4,5,6,7,8a,8b,8c,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30
+    protected $csv = '1,2,3,4,5,6,7,8a,8b,8c,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30
 1,10,15,14,11,8,1,5,8,8,6,17,20,0,0,0,9,0,0,5,71,7,9,2,3,2,3,3,10,6,10,10,-9
 2,15,18,15,13,1,0,0,6,7,4,14,7,0,3,0,0,7,0,5,71,7,4,3,4,0,2,2,6,6,10,5,-33
 3,15,22,18,14,8,22,0,9,5,3,17,21,10,0,2,8,0,9,13,60,8,3,5,2,0,4,2,8,9,10,10,-38
@@ -26,31 +27,27 @@ class ImportController
 15,10,20,22,12,9,9,7,9,7,5,17,15,0,0,10,10,9,8,11,47,8,10,10,6,1,0,9,8,7,10,10,-23
 16,15,20,17,14,10,22,8,8,5,6,17,22,0,4,1,9,6,0,12,60,5,6,5,4,4,0,3,4,8,10,10,-18
 17,15,23,18,12,8,12,7,7,6,7,18,17,6,10,9,10,0,0,12,60,6,5,9,3,7,3,9,7,7,10,10,-2
-18,15,19,22,13,10,23,10,7,7,5,17,21,0,0,0,10,8,9,9,71,9,6,10,6,9,8,3,5,9,10,10,-25";
+18,15,19,22,13,10,23,10,7,7,5,17,21,0,0,0,10,8,9,9,71,9,6,10,6,9,8,3,5,9,10,10,-25';
 
     public function import(int $year)
     {
-        $scores = array_map("str_getcsv", explode("\n", $this->csv));
+        $scores = array_map('str_getcsv', explode("\n", $this->csv));
 
         $ratingNumbers = array_shift($scores);
-        $ratingMap = [];
-        $teamsMap = [];
-        $toImport = [];
+        $ratingMap     = [];
+        $teamsMap      = [];
+        $toImport      = [];
 
-        $ratings = Rating::whereHas('year', static function ($query) use ($year) {
-            $query->where('label', $year);
-        })->where('outside_competition', false)->get();
+        $ratings = Rating::inYear($year)->where('outside_competition', false)->get();
 
-        $teams = Team::whereHas('year', static function ($query) use ($year) {
-            $query->where('label', $year);
-        })->get();
+        $teams = Team::inYear($year)->get();
 
         foreach ($ratings as $rating) {
-            $ratingMap[$rating->number.$rating->suffix] = $rating->id;
+            $ratingMap[ $rating->number . $rating->suffix ] = $rating->id;
         }
 
         foreach ($teams as $team) {
-            $teamsMap[$team->start_number] = $team->id;
+            $teamsMap[ $team->start_number ] = $team->id;
         }
 
         foreach ($scores as $score) {
@@ -58,9 +55,9 @@ class ImportController
 
             foreach ($score as $key => $scoreByRating) {
                 $toImport[] = [
-                    'score' => (int)$scoreByRating,
-                    'team_id' => $teamsMap[$teamNumber],
-                    'rating_id' => $ratingMap[$ratingNumbers[$key]]
+                    'score'     => (int) $scoreByRating,
+                    'team_id'   => $teamsMap[ $teamNumber ],
+                    'rating_id' => $ratingMap[ $ratingNumbers[ $key ] ],
                 ];
             }
         }

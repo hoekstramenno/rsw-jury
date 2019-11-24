@@ -29,16 +29,6 @@ class Adapter extends AbstractAdapter
         parent::__construct(new Score(), $paging);
     }
 
-    /**
-     * @param Builder $query
-     * @param Collection $filters
-     * @return void
-     */
-    protected function filter($query, Collection $filters)
-    {
-        // TODO
-    }
-
     public function year(): BelongsTo
     {
         return $this->belongsTo('years');
@@ -49,4 +39,13 @@ class Adapter extends AbstractAdapter
         return $this->belongsTo('teams');
     }
 
+    /**
+     * @param Builder $query
+     * @param Collection $filters
+     * @return void
+     */
+    protected function filter($query, Collection $filters)
+    {
+        // TODO
+    }
 }

@@ -8,6 +8,7 @@ use App\Models\Team;
 use App\Services\FileGenerators\Pdf;
 use App\Support\Factories\Printable\PdfPrintableFactory;
 use App\Support\Result\TotalScore;
+use Illuminate\Support\Collection;
 
 class ResultController extends Controller
 {
@@ -31,19 +32,14 @@ class ResultController extends Controller
 
     public function index(int $year)
     {
-        $ratings = Rating::whereHas('year', static function ($query) use ($year) {
-            $query->where('label', $year);
-        })->where('outside_competition', false)->get();
+        /** @var Collection $ratings */
+        $ratings = Rating::inYear($year)->where('outside_competition', false)->get();
 
-        $totalScoreYear = array_reduce($ratings->toArray(), static function ($carry, $rating) {
-            $carry += $rating['points'] * $rating['factor'];
-
-            return $carry;
+        $totalScoreYear = array_reduce($ratings->toArray(), function ($carry, $rating) {
+            return $carry + ($rating['points'] * $rating['factor']);
         }, 0);
 
-        $teams = Team::whereHas('year', static function ($query) use ($year) {
-            $query->where('label', $year);
-        })->where('is_active', true)->with(['scores', 'group'])->get();
+        $teams = Team::inYear($year)->where('is_active', true)->with(['scores', 'group'])->get();
 
         $scores = (new TotalScore($ratings, $teams))->calculate();
 
@@ -57,18 +53,19 @@ class ResultController extends Controller
 
     public function pdf(int $year)
     {
-        $ratings = Rating::whereHas('year', static function ($query) use ($year) {
-            $query->where('label', $year);
-        })->where('outside_competition', false)->get();
+        /** @var Collection $ratings */
+        $ratings = Rating::inYear($year)
+            ->where('outside_competition', false)
+            ->get();
 
-        $totalScoreYear = array_reduce($ratings->toArray(), static function ($carry, $rating) {
-            $carry += $rating['points'] * $rating['factor'];
-            return $carry;
+        $totalScoreYear = array_reduce($ratings->toArray(), function ($carry, $rating) {
+            return $carry + ($rating['points'] * $rating['factor']);
         }, 0);
 
-        $teams = Team::whereHas('year', static function ($query) use ($year) {
-            $query->where('label', $year);
-        })->where('is_active', true)->with(['scores', 'group'])->get();
+        $teams = Team::inYear($year)
+            ->where('is_active', true)
+            ->with(['scores', 'group'])
+            ->get();
 
         $scores = (new TotalScore($ratings, $teams))->calculate();
 

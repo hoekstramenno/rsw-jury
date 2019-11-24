@@ -11,7 +11,6 @@ use Illuminate\Support\Collection;
 
 class Adapter extends AbstractAdapter
 {
-
     /**
      * Mapping of JSON API attribute field names to model keys.
      *
@@ -48,6 +47,4 @@ class Adapter extends AbstractAdapter
     {
         return $this->belongsTo('group');
     }
-
 }
-

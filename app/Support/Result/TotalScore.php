@@ -2,7 +2,6 @@
 
 namespace App\Support\Result;
 
-use App\Models\Team;
 use Illuminate\Support\Collection;
 
 class TotalScore
@@ -26,13 +25,14 @@ class TotalScore
     public function calculate(): array
     {
         $finalResults = collect([]);
+
         foreach ($this->teams as $team) {
             $scores = [];
             foreach ($this->ratings as $rating) {
-                $scores[$rating->id] = 0;
+                $scores[ $rating->id ] = 0;
                 foreach ($team->scores as $score) {
                     if ($score->rating->id === $rating->id) {
-                        $scores[$rating->id] = $score->score * $rating->factor;
+                        $scores[ $rating->id ] = $score->score * $rating->factor;
                     }
                 }
             }
@@ -40,11 +40,11 @@ class TotalScore
             $totalScore = $teamScore->sum();
             $finalResults->add(
                 [
-                    'team'    => $team,
-                    'ratings' => $teamScore,
-                    'total'   => $totalScore,
-                    'max_score' => 2000,
-                    'percentage' => $totalScore / 2000 * 100
+                    'team'       => $team,
+                    'ratings'    => $teamScore,
+                    'total'      => $totalScore,
+                    'max_score'  => config('rsw.max_score'),
+                    'percentage' => $totalScore / config('rsw.max_score') * 100,
                 ]
             );
         }
@@ -52,6 +52,3 @@ class TotalScore
         return array_values($finalResults->sortByDesc('total')->toArray());
     }
 }
-
-
-

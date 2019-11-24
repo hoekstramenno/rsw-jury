@@ -2,11 +2,7 @@
 
 namespace App\JsonApi\Ratings;
 
-use App\Models\Criteria;
 use App\Models\Rating;
-use App\Models\RatingCategory;
-use App\Models\Score;
-use App\Models\Year;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Eloquent\BelongsTo;
 use CloudCreativity\LaravelJsonApi\Eloquent\HasMany;
@@ -22,7 +18,7 @@ class Adapter extends AbstractAdapter
      *
      * @var array
      */
-    protected $attributes = [];
+    protected $attributes;
 
     /**
      * Adapter constructor.
@@ -32,20 +28,6 @@ class Adapter extends AbstractAdapter
     public function __construct(StandardStrategy $paging)
     {
         parent::__construct(new Rating(), $paging);
-    }
-
-    /**
-     * @param Builder $query
-     * @param Collection $filters
-     * @return void
-     */
-    protected function filter($query, Collection $filters)
-    {
-        if ($year = $filters->get('year')) {
-            $query->whereHas('year', function ($query) use($year) {
-                $query->where('label', $year);
-            })->get();
-        }
     }
 
     public function scores(): HasMany
@@ -66,5 +48,13 @@ class Adapter extends AbstractAdapter
     public function year(): BelongsTo
     {
         return $this->belongsTo('years');
+    }
+
+    protected function filter($query, Collection $filters)
+    {
+        $year = $filters->get('year');
+        if ($year) {
+            $query->inYear($year)->get();
+        }
     }
 }

@@ -2,13 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+
 class Team extends Model
 {
-    protected $fillable = ['start_number', 'name'];
+    protected $fillable = [
+        'start_number',
+        'name'
+    ];
 
     public function year(): BelongsTo
     {
@@ -23,5 +28,22 @@ class Team extends Model
     public function scores(): HasMany
     {
         return $this->hasMany(Score::class);
+    }
+
+    public function scopeInYear(Builder $query, int $year): Builder
+    {
+        return $query->whereHas(
+            'year', function (Builder $query) use ($year) {
+            $query->where('label', $year);
+        });
+    }
+
+    public function scopeWithScoresOfRating(Builder $query, Rating $rating): Builder
+    {
+        return $query->with([
+            'scores' => function (HasMany $query) use ($rating) {
+                $query->where('rating_id', $rating->id);
+            }
+        ]);
     }
 }

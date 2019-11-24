@@ -4,7 +4,7 @@ namespace App\JsonApi\Years;
 
 use App\Models\Year;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
-use CloudCreativity\LaravelJsonApi\Eloquent\hasMany;
+use CloudCreativity\LaravelJsonApi\Eloquent\HasMany;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -34,12 +34,12 @@ class Adapter extends AbstractAdapter
         // TODO
     }
 
-    protected function teams(): hasMany
+    protected function teams(): HasMany
     {
         return $this->hasMany('teams');
     }
 
-    protected function ratings(): hasMany
+    protected function ratings(): HasMany
     {
         return $this->hasMany('ratings');
     }

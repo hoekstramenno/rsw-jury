@@ -13,8 +13,7 @@ class Schema extends SchemaProvider
     protected $resourceType = 'teams';
 
     /**
-     * @param $resource
-     *      the domain record being serialized.
+     * @param object $resource the domain record being serialized.
      * @return string
      */
     public function getId($resource) : string
@@ -23,7 +22,7 @@ class Schema extends SchemaProvider
     }
 
     /**
-     * @param $resource
+     * @param object $resource
      *      the domain record being serialized.
      * @return array
      */

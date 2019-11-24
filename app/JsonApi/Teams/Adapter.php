@@ -4,9 +4,9 @@ namespace App\JsonApi\Teams;
 
 use App\Models\Team;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
+use CloudCreativity\LaravelJsonApi\Eloquent\BelongsTo;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
 
 class Adapter extends AbstractAdapter
@@ -17,7 +17,7 @@ class Adapter extends AbstractAdapter
      *
      * @var array
      */
-    protected $attributes = [];
+    protected $attributes;
 
     /**
      * Adapter constructor.
@@ -39,12 +39,12 @@ class Adapter extends AbstractAdapter
         // TODO
     }
 
-    protected function year(): \CloudCreativity\LaravelJsonApi\Eloquent\BelongsTo
+    protected function year(): BelongsTo
     {
         return $this->belongsTo('year');
     }
 
-    protected function group(): \CloudCreativity\LaravelJsonApi\Eloquent\BelongsTo
+    protected function group(): BelongsTo
     {
         return $this->belongsTo('group');
     }

@@ -17,7 +17,7 @@ class Adapter extends AbstractAdapter
      *
      * @var array
      */
-    protected $attributes = [];
+    protected $attributes;
 
     /**
      * Adapter constructor.

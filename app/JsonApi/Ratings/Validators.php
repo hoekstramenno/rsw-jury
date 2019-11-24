@@ -17,7 +17,7 @@ class Validators extends AbstractValidators
     protected $allowedIncludePaths = [
         'rating_category',
         'year',
-        'scores'
+        'scores',
     ];
 
     /**
@@ -33,15 +33,15 @@ class Validators extends AbstractValidators
      *
      * @param mixed|null $record
      *      the record being updated, or null if creating a resource.
-     * @return mixed
+     * @return array
      */
     protected function rules($record = null): array
     {
         return [
-            'number'  => 'required|numeric',
-            'name'  => 'required',
-            'points'  => 'required|numeric',
-            'factor' => 'required|numeric',
+            'number'              => 'required|numeric',
+            'name'                => 'required',
+            'points'              => 'required|numeric',
+            'factor'              => 'required|numeric',
             'outside_competition' => 'boolean',
         ];
     }
@@ -54,7 +54,7 @@ class Validators extends AbstractValidators
     protected function queryRules(): array
     {
         return [
-            'filter.year' => 'numeric'
+            'filter.year' => 'numeric',
         ];
     }
 

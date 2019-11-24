@@ -13,7 +13,7 @@ class Schema extends SchemaProvider
     protected $resourceType = 'scores';
 
     /**
-     * @param $resource
+     * @param object $resource
      *      the domain record being serialized.
      * @return string
      */
@@ -23,14 +23,14 @@ class Schema extends SchemaProvider
     }
 
     /**
-     * @param $resource
+     * @param object $resource
      *      the domain record being serialized.
      * @return array
      */
     public function getAttributes($resource)
     {
         return [
-            'score' => $resource->score,
+            'score'      => $resource->score,
             'created-at' => $resource->created_at->toAtomString(),
             'updated-at' => $resource->updated_at->toAtomString(),
         ];
@@ -49,7 +49,7 @@ class Schema extends SchemaProvider
                     ];
                 },
             ],
-            'team' => [
+            'team'   => [
                 self::DATA => function () use ($score) {
                     return $score->team;
                 },

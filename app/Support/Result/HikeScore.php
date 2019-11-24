@@ -7,7 +7,7 @@ use App\Models\Team;
 class HikeScore
 {
     /**
-     * @var \App\Models\Team
+     * @var Team
      */
     protected $team;
 
@@ -18,22 +18,26 @@ class HikeScore
         $this->team = $team;
     }
 
-    public function addScore(int $score)
+    public function addScore(int $score): HikeScore
     {
         $this->scores[] = $score;
+
         return $this;
     }
 
-    public function getTeam() : Team
+    public function getTeam(): Team
     {
         return $this->team;
     }
 
     public function getTotalScore()
     {
-        return collect($this->scores)->reduce(static function($carry, $score){
-            $carry += $score;
-            return $carry;
-        });
+        return collect($this->scores)->reduce(
+            static function ($carry, $score) {
+                $carry += $score;
+
+                return $carry;
+            }
+        );
     }
 }

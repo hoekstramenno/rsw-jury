@@ -33,7 +33,7 @@ class RatingController extends Controller
 
     public function __invoke(Request $request, string $year, string $formNumber, string $suffix = '')
     {
-        $rating = $this->getRating($year, $formNumber, $suffix);
+        $rating = $this->getRating((int)$year, (int)$formNumber, $suffix);
 
         $teams = $this->getAllActiveTeamsOfYear($year);
 
@@ -61,13 +61,6 @@ class RatingController extends Controller
         ]);
     }
 
-    /**
-     * @param string $year
-     * @param string $formNumber
-     * @param string $suffix
-     *
-     * @return mixed
-     */
     protected function getRating(int $year, int $formNumber, string $suffix)
     {
         return Rating::where(

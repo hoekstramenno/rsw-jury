@@ -1,7 +1,8 @@
 <?php
 
-namespace App\JsonApi\Criterias;
+namespace App\JsonApi\Criteria;
 
+use App\Models\Criteria;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,7 +16,7 @@ class Adapter extends AbstractAdapter
      *
      * @var array
      */
-    protected $attributes = [];
+    protected $attributes;
 
     /**
      * Adapter constructor.
@@ -24,7 +25,7 @@ class Adapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\Criteria(), $paging);
+        parent::__construct(new Criteria(), $paging);
     }
 
     /**

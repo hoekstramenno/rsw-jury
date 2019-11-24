@@ -31,7 +31,7 @@ class Pdf extends \Knp\Snappy\Pdf
     protected function initializeOptions(array $options = []) : void
     {
         foreach ($options as $optionKey => $optionValue) {
-            $this->setOption($optionKey, $optionValue);
+            $this->setOption((string)$optionKey, $optionValue);
         }
     }
 

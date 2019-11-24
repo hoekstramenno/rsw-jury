@@ -13,24 +13,22 @@ class Schema extends SchemaProvider
     protected $resourceType = 'years';
 
     /**
-     * @param $resource
-     *      the domain record being serialized.
+     * @param object $resource the domain record being serialized.
      * @return string
      */
-    public function getId($resource) : string
+    public function getId($resource): string
     {
         return (string) $resource->getRouteKey();
     }
 
     /**
-     * @param $resource
-     *      the domain record being serialized.
+     * @param object $resource the domain record being serialized.
      * @return array
      */
     public function getAttributes($resource): array
     {
         return [
-            'label' => $resource->label,
+            'label'      => $resource->label,
             'created-at' => $resource->created_at->toAtomString(),
             'updated-at' => $resource->updated_at->toAtomString(),
         ];
@@ -39,17 +37,17 @@ class Schema extends SchemaProvider
     public function getRelationships($year, $isPrimary, array $includeRelationships): array
     {
         return [
-            'teams' => [
-                self::SHOW_SELF => true,
+            'teams'   => [
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::META => function () use ($year) {
+                self::META         => function () use ($year) {
                     return [
                         'total' => $year->group_count ?? 0,
                     ];
                 },
             ],
             'ratings' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
             ],
         ];

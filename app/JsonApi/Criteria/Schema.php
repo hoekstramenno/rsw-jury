@@ -1,6 +1,6 @@
 <?php
 
-namespace App\JsonApi\Criterias;
+namespace App\JsonApi\Criteria;
 
 use Neomerx\JsonApi\Schema\SchemaProvider;
 
@@ -10,10 +10,10 @@ class Schema extends SchemaProvider
     /**
      * @var string
      */
-    protected $resourceType = 'criterias';
+    protected $resourceType = 'criteria';
 
     /**
-     * @param $resource
+     * @param object $resource
      *      the domain record being serialized.
      * @return string
      */
@@ -23,7 +23,7 @@ class Schema extends SchemaProvider
     }
 
     /**
-     * @param $resource
+     * @param object $resource
      *      the domain record being serialized.
      * @return array
      */

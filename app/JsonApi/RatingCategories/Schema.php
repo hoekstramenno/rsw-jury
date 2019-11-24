@@ -13,7 +13,7 @@ class Schema extends SchemaProvider
     protected $resourceType = 'rating-categories';
 
     /**
-     * @param $resource
+     * @param object $resource
      *      the domain record being serialized.
      * @return string
      */
@@ -23,7 +23,7 @@ class Schema extends SchemaProvider
     }
 
     /**
-     * @param $resource
+     * @param object $resource
      *      the domain record being serialized.
      * @return array
      */

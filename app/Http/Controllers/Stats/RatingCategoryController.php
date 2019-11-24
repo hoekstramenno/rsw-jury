@@ -13,7 +13,11 @@ class RatingCategoryController
             $query->where('label', $year);
         })->with('ratingCategory')->where('outside_competition', false)->get();
 
-        $data = [];
+        $data = [
+            'data' => [],
+            'labels' => [],
+            'colors' => []
+        ];
 
         foreach ($ratings as $rating) {
             $category = $rating->ratingCategory;

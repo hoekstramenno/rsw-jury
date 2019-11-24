@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\HikeTime;
 use App\Models\Rating;
-use App\Models\RatingCategory;
 use App\Models\Score;
 use App\Models\Team;
 use App\Support\Calculators\TimeCorrection;
@@ -15,17 +14,7 @@ class ScoreController extends Controller
 {
     public function show(int $year, int $formNumber, string $suffix = '')
     {
-        $rating = Rating::where([
-            'number' => $formNumber,
-        ])
-                        ->whereHas('year', static function ($query) use ($year) {
-                            $query->where('label', $year);
-                        })
-                        ->when($suffix, static function ($query, $suffix) {
-                            return $query->where('suffix', $suffix);
-                        })
-                        ->with(['printView', 'year', 'ratingCategory', 'criteria', 'definitions', 'year'])
-                        ->firstOrFail();
+        $rating = $this->getRating($year, $formNumber, $suffix);
 
         $teams = Team::whereHas('year', static function ($query) use ($year) {
             $query->where('label', $year);
@@ -125,8 +114,8 @@ class ScoreController extends Controller
 
         echo 'Snelste tijd: ' . $fastest;
 
-        $quotienten = $this->calculateQuotients($fastest, $timesInSeconds);
-        $scores     = $this->calculatePercentages($quotienten, $hikescores);
+        $quotients = $this->calculateQuotients($fastest, $timesInSeconds);
+        $scores     = $this->calculatePercentages($quotients, $hikescores);
 
         dump($scores);
 
@@ -196,26 +185,26 @@ class ScoreController extends Controller
 
     }
 
-    public function calculateQuotients($fastest, $timesInSeconds)
+    public function calculateQuotients($fastest, $timesInSeconds): array
     {
-        $quotienten = [];
+        $quotients = [];
 
-        foreach ($timesInSeconds as $groepsNr => $time) {
-            $quotienten[$groepsNr] = $time / $fastest;
+        foreach ($timesInSeconds as $groupNumber => $time) {
+            $quotients[$groupNumber] = $time / $fastest;
 
         }
 
-        return $quotienten;
+        return $quotients;
     }
 
-    public function calculatePercentages($quotienten, $hikescores)
+    public function calculatePercentages($quotients, $hikescores): array
     {
         $scores = [];
 
-        foreach ($hikescores as $groepsNr => $score) {
-            $percentage        = 100 / $quotienten[$groepsNr];
+        foreach ($hikescores as $groupNumber => $score) {
+            $percentage        = 100 / $quotients[$groupNumber];
             $newScore          = $score * ($percentage / 100);
-            $scores[$groepsNr] = floor($score - $newScore);
+            $scores[$groupNumber] = floor($score - $newScore);
         }
 
         return $scores;
@@ -259,10 +248,10 @@ class ScoreController extends Controller
             foreach ($rating->scores as $score) {
                 $team = $score->team;
                 if (isset($hikeScores[$team->id])) {
-                    $hikeScores[$team->id]->addScore($score->score * $rating->factor);
+                    $hikeScores[$team->id]->addScore((int)round($score->score * $rating->factor));
                     continue;
                 }
-                $hikeScores[$team->id] = (new HikeScore($score->team))->addScore($score->score * $rating->factor);
+                $hikeScores[$team->id] = (new HikeScore($score->team))->addScore((int)round($score->score * $rating->factor));
             }
         }
 
@@ -281,5 +270,20 @@ class ScoreController extends Controller
         return Team::whereHas('year', static function ($query) use ($year) {
             $query->where('label', $year);
         })->count();
+    }
+
+    private function getRating(int $year, int $formNumber, string $suffix)
+    {
+        return Rating::where([
+            'number' => $formNumber,
+        ])
+        ->whereHas('year', static function ($query) use ($year) {
+            $query->where('label', $year);
+        })
+        ->when($suffix, static function ($query, $suffix) {
+            return $query->where('suffix', $suffix);
+        })
+        ->with(['printView', 'year', 'ratingCategory', 'criteria', 'definitions', 'year'])
+        ->firstOrFail();
     }
 }

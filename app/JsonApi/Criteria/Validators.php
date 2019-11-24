@@ -1,6 +1,6 @@
 <?php
 
-namespace App\JsonApi\Criterias;
+namespace App\JsonApi\Criteria;
 
 use CloudCreativity\LaravelJsonApi\Validation\AbstractValidators;
 
@@ -13,7 +13,7 @@ class Validators extends AbstractValidators
      * @var string[]|null
      *      the allowed paths, an empty array for none allowed, or null to allow all paths.
      */
-    protected $allowedIncludePaths = [];
+    protected $allowedIncludePaths;
 
     /**
      * The sort field names a client is allowed send.
@@ -21,14 +21,14 @@ class Validators extends AbstractValidators
      * @var string[]|null
      *      the allowed fields, an empty array for none allowed, or null to allow all fields.
      */
-    protected $allowedSortParameters = [];
+    protected $allowedSortParameters;
 
     /**
      * Get resource validation rules.
      *
      * @param mixed|null $record
      *      the record being updated, or null if creating a resource.
-     * @return mixed
+     * @return array
      */
     protected function rules($record = null): array
     {

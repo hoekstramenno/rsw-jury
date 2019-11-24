@@ -16,11 +16,11 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-//
-// JsonApi::register('v1')->routes(function ($api) {
-//     $api->resource('years', [
-//         'has-many' => ['teams', 'scores', 'ratings'],
-//     ]);
+
+JsonApi::register('v1')->routes(function ($api) {
+    $api->resource('years', [
+        'has-many' => ['teams', 'scores', 'ratings'],
+    ]);
 //     $api->resource('teams', [
 //         'has-one' => ['year', 'group'],
 //     ]);
@@ -37,4 +37,4 @@ use Illuminate\Http\Request;
 //     $api->resource('scores', [
 //         'has-one' => ['group', 'team'],
 //     ]);
-// });
+});

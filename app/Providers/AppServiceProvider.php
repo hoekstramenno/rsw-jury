@@ -17,8 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $years = DB::table('years')->get();
-        View::share('years', $years);
+        // $years = DB::table('years')->get();
+        // View::share('years', $years);
 
         $currentYear = Request::segment(1);
         View::share('currentYear', $currentYear);

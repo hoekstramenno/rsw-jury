@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ca3bcf8366622959c39509987b82351",
+    "content-hash": "3825cb90a0a3a4f291b9d9fa1de02ebe",
     "packages": [
         {
             "name": "cloudcreativity/laravel-json-api",
@@ -4234,6 +4234,37 @@
                 "performance"
             ],
             "time": "2019-11-06T16:40:04+00:00"
+        },
+        {
+            "name": "czim/phpunit-printer",
+            "version": "0.9.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/czim/phpunit-printer.git",
+                "reference": "e0f7992708d636e86a613cbcf5949e0e7f7fe8bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/czim/phpunit-printer/zipball/e0f7992708d636e86a613cbcf5949e0e7f7fe8bf",
+                "reference": "e0f7992708d636e86a613cbcf5949e0e7f7fe8bf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0",
+                "phpunit/phpunit": ">=7.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Czim\\PHPUnitPrinter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Customized PHPUnit output",
+            "time": "2019-04-08T09:48:30+00:00"
         },
         {
             "name": "doctrine/annotations",

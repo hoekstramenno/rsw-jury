@@ -1,6 +1,8 @@
 name: Continuous Integration Laravel 6
-branches:
-  - master
+on:
+  push:
+    branches:
+      - master
 jobs:
   laravel-tests:
     runs-on: ubuntu-latest

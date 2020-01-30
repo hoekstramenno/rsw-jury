@@ -31,9 +31,9 @@ class RatingController extends Controller
         $this->printableFactory = $printableFactory;
     }
 
-    public function __invoke(Request $request, string $year, string $formNumber, string $suffix = '')
+    public function __invoke(Request $request, int $year, string $formNumber, string $suffix = '')
     {
-        $rating = $this->getRating((int) $year, (int) $formNumber, $suffix);
+        $rating = $this->getRating($year, (int) $formNumber, $suffix);
 
         $teams = $this->getAllActiveTeamsOfYear($year);
 
@@ -73,22 +73,14 @@ class RatingController extends Controller
             ->firstOrFail();
     }
 
-    /**
-     * @param string $year
-     *
-     * @return int
-     */
-    protected function getCountOfTotalTeams(string $year): int
+
+    protected function getCountOfTotalTeams(int $year): int
     {
         return Team::inYear($year)->count();
     }
 
-    /**
-     * @param string $year
-     *
-     * @return mixed
-     */
-    protected function getAllActiveTeamsOfYear(string $year)
+
+    protected function getAllActiveTeamsOfYear(int $year)
     {
         return Team::inYear($year)->where('is_active', true)->get();
     }

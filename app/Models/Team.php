@@ -7,12 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-
+/**
+ * @property mixed start_nr
+ * @property mixed group
+ * @property mixed name
+ */
 class Team extends Model
 {
     protected $fillable = [
         'start_number',
         'name'
+    ];
+
+    protected $casts = [
+        'outside_competition' => 'boolean',
+        'won_motivation_award' => 'boolean',
+        'won_theme_award' => 'boolean',
     ];
 
     public function year(): BelongsTo

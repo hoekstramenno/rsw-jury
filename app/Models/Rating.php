@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @method static inYear(int $year)
+ * @property mixed id
+ * @property mixed factor
+ * @property mixed points
  */
 class Rating extends Model
 {
@@ -52,6 +55,11 @@ class Rating extends Model
     public function year(): BelongsTo
     {
         return $this->belongsTo(Year::class);
+    }
+
+    public function getMaxPointsAttribute(): int
+    {
+        return $this->factor * $this->points;
     }
 
     public function scopeInYear(Builder $query, int $year)

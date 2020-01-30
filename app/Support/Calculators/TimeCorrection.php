@@ -41,8 +41,6 @@ class TimeCorrection
     {
         $scores = [];
 
-        dump($quotes, $hikeScores);
-
         /** @var \App\Support\Result\HikeScore $score */
         foreach ($hikeScores as $score) {
             dump($score->getTeam()->id. '-'.$score->getTotalScore());

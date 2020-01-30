@@ -32,44 +32,44 @@
                     <tbody>
 
                     @foreach ($scores as $position => $score)
-                        @if ($score['team']->outside_competition == false)
+                        @if ($score->getTeam()->outside_competition === false)
                             <tr class="
-                                    {{ $score['team']->won_motivation_award ? 'text-danger ' : '' }}
-                                    {{ $score['team']->won_theme_award ? 'text-info ' : '' }}
+                                    {{ $score->getTeam()->won_motivation_award ? 'text-danger ' : '' }}
+                                    {{ $score->getTeam()->won_theme_award ? 'text-info ' : '' }}
                                     {{ $position < 2 ? 'text-success ' : '' }}
                                     ">
                                 <td class="text-center">{{ $position+1 }}</td>
-                                <td class="text-center">{{ $score['team']->start_number }}</td>
-                                <td class="text-center">{{ $score['team']->group->name }}</td>
-                                <td class="text-center">{{ $score['team']->name }}</td>
+                                <td class="text-center">{{ $score->getTeam()->start_number }}</td>
+                                <td class="text-center">{{ $score->getTeam()->group->name }}</td>
+                                <td class="text-center">{{ $score->getTeam()->name }}</td>
                                 @foreach ($ratings as $rating)
-                                    @foreach ($score['ratings'] as $ratingId => $points)
+                                    @foreach ($score->getScores() as $ratingId => $points)
                                             @if ($ratingId === $rating->id)
                                                 <td class="text-center">{{ $points }}</td>
                                             @endif
                                     @endforeach
                                 @endforeach
-                                <td class="text-center">{{$score['total']}}</td>
-                                <td class="text-center">{{$score['percentage']}}%</td>
+                                <td class="text-center">{{$score->getTotal()}}</td>
+                                <td class="text-center">{{$score->getPercentage()}}%</td>
                             </tr>
                         @endif
                     @endforeach
                     @foreach ($scores as $position => $score)
-                        @if ($score['team']->outside_competition == true)
+                        @if ($score->getTeam()->outside_competition === true)
                             <tr class="text-muted">
                                 <td class="text-center">BM</td>
-                                <td class="text-center">{{ $score['team']->start_number }}</td>
-                                <td class="text-center">{{ $score['team']->group->name }}</td>
-                                <td class="text-center">{{ $score['team']->name }}</td>
+                                <td class="text-center">{{ $score->getTeam()->start_number }}</td>
+                                <td class="text-center">{{ $score->getTeam()->group->name }}</td>
+                                <td class="text-center">{{ $score->getTeam()->name }}</td>
                                 @foreach ($ratings as $rating)
-                                    @foreach ($score['ratings'] as $ratingId => $points)
+                                    @foreach ($score->getScores() as $ratingId => $points)
                                         @if ($ratingId === $rating->id)
                                             <td class="text-center">{{ $points }}</td>
                                         @endif
                                     @endforeach
                                 @endforeach
-                                <td class="text-center">{{$score['total']}}</td>
-                                <td class="text-center">{{$score['percentage']}}%</td>
+                                <td class="text-center">{{$score->getTotal()}}</td>
+                                <td class="text-center">{{$score->getPercentage()}}%</td>
                             </tr>
                         @endif
                     @endforeach
@@ -81,7 +81,7 @@
                         <td class="text-center">Totaal</td>
                         <td class="text-center"></td>
                         @foreach ($ratings as $rating)
-                            <td class="text-center">{{ $rating->points * $rating->factor }}</td>
+                            <td class="text-center">{{ $rating->max_points }}</td>
                         @endforeach
                         <td class="text-center">{{ $total }}</td>
                         <td class="text-center">%</td>

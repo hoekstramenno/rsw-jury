@@ -16,6 +16,7 @@ class TotalScore
      */
     protected $teams;
 
+
     public function __construct(Collection $ratings, Collection $teams)
     {
         $this->ratings = $ratings;
@@ -29,10 +30,10 @@ class TotalScore
         foreach ($this->teams as $team) {
             $scores = [];
             foreach ($this->ratings as $rating) {
-                $scores[ $rating->id ] = 0;
+                $scores[$rating->id] = 0;
                 foreach ($team->scores as $score) {
                     if ($score->rating->id === $rating->id) {
-                        $scores[ $rating->id ] = $score->score * $rating->factor;
+                        $scores[$rating->id] = $score->score * $rating->factor;
                     }
                 }
             }

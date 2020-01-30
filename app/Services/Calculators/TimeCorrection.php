@@ -11,7 +11,9 @@ use App\Support\Result\HikeScore;
 
 class TimeCorrection
 {
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function calculateHikeScores(): void
     {
@@ -205,11 +207,11 @@ class TimeCorrection
     }
 
     /**
-     * @param string $year
+     * @param int $year
      *
      * @return mixed
      */
-    protected function getCountOfTotalTeams(string $year)
+    protected function getCountOfTotalTeams(int $year)
     {
         return Team::inYear($year)->count();
     }

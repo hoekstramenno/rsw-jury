@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Group;
 use Illuminate\Http\JsonResponse;
 
-class GroupController  extends Controller
+class GroupController extends Controller
 {
     public function ratingByCategoryAndGroup(int $groupId, int $ratingCategoryId): JsonResponse
     {
@@ -32,29 +32,31 @@ class GroupController  extends Controller
         foreach ($rating->scores as $score) {
             $finalScore = $score->score * $factor;
 
-            if (isset($data['data'][$score->year_id])) {
-                $data['data'][$score->team_id][$score->year_id] += $finalScore;
+            if (isset($data['data'][ $score->year_id ])) {
+                $data['data'][ $score->team_id ][ $score->year_id ] += $finalScore;
                 continue;
             }
-            $data['data'][$score->year_id]   = 1;
-            $data['labels'][$score->year_id] = $score->team->group->name . ' - ' . $score->team->name;
-            $data['colors'][$score->year_id] = $this->createRandomColor();
+            $data['data'][ $score->year_id ]   = 1;
+            $data['labels'][ $score->year_id ] = $score->team->group->name . ' - ' . $score->team->name;
+            $data['colors'][ $score->year_id ] = $this->createRandomColor();
 
         }
 
-        return response()->json((object)[
-            'labels'  => array_values($data['labels']),
-            'dataset' => [
-                'label'           => 'Score voor ' . $rating->name,
-                'backgroundColor' => array_values($data['colors']),
-                'borderColor'     => 'rgb(255, 99, 132)',
-                'data'            => array_values($data['data']),
-            ],
-            'options' => [
-                'responsive'          => true,
-                'maintainAspectRatio' => false,
-            ],
-        ]);
+        return response()->json(
+            (object) [
+                'labels'  => array_values($data['labels']),
+                'dataset' => [
+                    'label'           => 'Score voor ' . $rating->name,
+                    'backgroundColor' => array_values($data['colors']),
+                    'borderColor'     => 'rgb(255, 99, 132)',
+                    'data'            => array_values($data['data']),
+                ],
+                'options' => [
+                    'responsive'          => true,
+                    'maintainAspectRatio' => false,
+                ],
+            ]
+        );
     }
 
     protected function createColorPart(): string

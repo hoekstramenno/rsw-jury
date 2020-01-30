@@ -1,5 +1,5 @@
 # RSW Haarlem Jury systeem
 
-![GitHub Actions status](https://github.com/hoekstramenno/rsw-jury/workflows/laravel/badge.svg)
+![Laravel](https://github.com/hoekstramenno/rsw-jury/workflows/Laravel/badge.svg?branch=master)
 
 Jury System for RSW Haarlem

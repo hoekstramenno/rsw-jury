@@ -11,6 +11,9 @@ class HikeScore
      */
     protected $team;
 
+    /**
+     * @var array
+     */
     protected $scores = [];
 
     public function __construct(Team $team)
@@ -32,8 +35,10 @@ class HikeScore
 
     public function getTotalScore(): int
     {
-        return collect($this->scores)->reduce(function ($carry, $score) {
-            return $carry + $score;
-        });
+        return collect($this->scores)->reduce(
+            function ($carry, $score) {
+                return $carry + $score;
+            }
+        );
     }
 }

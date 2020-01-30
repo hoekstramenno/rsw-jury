@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HikeTime;
 use App\Models\Rating;
 use App\Models\Score;
 use App\Models\Team;
-use App\Support\Calculators\TimeCorrection;
-use App\Support\Result\HikeScore;
 use Illuminate\Http\Request;
 
 class ScoreController extends Controller
@@ -17,24 +14,30 @@ class ScoreController extends Controller
         $rating = $this->getRating($year, $formNumber, $suffix);
 
         $teams = Team::inYear($year)
-            ->withScoresOfRating($rating)
-            ->where('is_active', true)
-            ->get();
+                     ->withScoresOfRating($rating)
+                     ->where('is_active', true)
+                     ->get();
 
-        return view('pages.scores.rating', [
-            'rating' => $rating,
-            'teams'  => $teams,
-        ]);
+        return view(
+            'pages.scores.rating',
+            [
+                'rating' => $rating,
+                'teams'  => $teams,
+            ]
+        );
     }
 
     public function index(int $year)
     {
         $ratings = Rating::inYear($year)->get();
 
-        return view('pages.scores.index', [
-            'ratings' => $ratings,
-            'year'    => $year,
-        ]);
+        return view(
+            'pages.scores.index',
+            [
+                'ratings' => $ratings,
+                'year'    => $year,
+            ]
+        );
     }
 
     public function store(Request $request, int $year, int $formNumber, string $suffix = '')
@@ -58,8 +61,8 @@ class ScoreController extends Controller
     protected function getRating(int $year, int $formNumber, string $suffix)
     {
         return Rating::withFormNumber($formNumber, $suffix)
-            ->inYear($year)
-            ->with(['printView', 'year', 'ratingCategory', 'criteria', 'definitions', 'year'])
-            ->firstOrFail();
+                     ->inYear($year)
+                     ->with(['printView', 'year', 'ratingCategory', 'criteria', 'definitions', 'year'])
+                     ->firstOrFail();
     }
 }

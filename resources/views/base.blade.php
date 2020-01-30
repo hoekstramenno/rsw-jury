@@ -31,25 +31,25 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('groups.index') }}">Groepen</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('ratings.index', ['year' => $currentYear]) }}">Beoordelingen</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('scores.index', ['year' => $currentYear]) }}">Scores</a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="{{ route('ratings.index', ['year' => $currentYear]) }}">Beoordelingen</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="{{ route('scores.index', ['year' => $currentYear]) }}">Scores</a>--}}
+{{--                </li>--}}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Jaren
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @foreach ($years as $year)
-                        <a class="dropdown-item" href="{{ route('dashboard', ['year' => $year->label]) }}">{{ $year->label }}</a>
-                        @endforeach
-                    </div>
+{{--                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">--}}
+{{--                        @foreach ($years as $year)--}}
+{{--                            <a class="dropdown-item" href="{{ route('dashboard', ['year' => $year->label]) }}">{{ $year->label }}</a>--}}
+{{--                        @endforeach--}}
+{{--                    </div>--}}
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('result.index', ['year' => $currentYear]) }}">Uitslag</a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="{{ route('result.index', ['year' => $currentYear]) }}">Uitslag</a>--}}
+{{--                </li>--}}
             </ul>
         </div>
     </nav>

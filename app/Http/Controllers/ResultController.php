@@ -35,46 +35,62 @@ class ResultController extends Controller
         /** @var Collection $ratings */
         $ratings = Rating::inYear($year)->where('outside_competition', false)->get();
 
-        $totalScoreYear = array_reduce($ratings->toArray(), function ($carry, $rating) {
-            return $carry + ($rating['points'] * $rating['factor']);
-        }, 0);
+        $totalScoreYear = array_reduce(
+            $ratings->toArray(),
+            function ($carry, $rating) {
+                return $carry + ($rating['points'] * $rating['factor']);
+            },
+            0
+        );
 
         $teams = Team::inYear($year)->where('is_active', true)->with(['scores', 'group'])->get();
 
         $scores = (new TotalScore($ratings, $teams))->calculate();
 
-        return view('pages.results.index', [
-            'ratings' => $ratings,
-            'total'   => $totalScoreYear,
-            'teams'   => $teams,
-            'scores'  => $scores,
-        ]);
+        return view(
+            'pages.results.index',
+            [
+                'ratings' => $ratings,
+                'total'   => $totalScoreYear,
+                'teams'   => $teams,
+                'scores'  => $scores,
+            ]
+        );
     }
 
     public function pdf(int $year)
     {
         /** @var Collection $ratings */
         $ratings = Rating::inYear($year)
-            ->where('outside_competition', false)
-            ->get();
+                         ->where('outside_competition', false)
+                         ->get();
 
-        $totalScoreYear = array_reduce($ratings->toArray(), function ($carry, $rating) {
-            return $carry + ($rating['points'] * $rating['factor']);
-        }, 0);
+        $totalScoreYear = array_reduce(
+            $ratings->toArray(),
+            function ($carry, $rating) {
+                return $carry + ($rating['points'] * $rating['factor']);
+            },
+            0
+        );
 
         $teams = Team::inYear($year)
-            ->where('is_active', true)
-            ->with(['scores', 'group'])
-            ->get();
+                     ->where('is_active', true)
+                     ->with(['scores', 'group'])
+                     ->get();
 
         $scores = (new TotalScore($ratings, $teams))->calculate();
 
-        $printableRating = $this->printableFactory->make('pdf.result', collect([
-            'ratings' => $ratings,
-            'total'   => $totalScoreYear,
-            'teams'   => $teams,
-            'scores'  => $scores,
-        ]));
+        $printableRating = $this->printableFactory->make(
+            'pdf.result',
+            collect(
+                [
+                    'ratings' => $ratings,
+                    'total'   => $totalScoreYear,
+                    'teams'   => $teams,
+                    'scores'  => $scores,
+                ]
+            )
+        );
 
         $name    = 'RSW-' . $year . '-eind-uitslag';
         $options = [
@@ -82,10 +98,11 @@ class ResultController extends Controller
             'title'       => $name,
         ];
 
-
-        return response($this->pdf->render($printableRating, $options))->withHeaders([
-            'Content-Type'        => 'application/pdf',
-            'Content-Disposition' => 'inline' . "; filename='rating-{$name}.pdf'",
-        ]);
+        return response($this->pdf->render($printableRating, $options))->withHeaders(
+            [
+                'Content-Type'        => 'application/pdf',
+                'Content-Disposition' => 'inline' . "; filename='rating-{$name}.pdf'",
+            ]
+        );
     }
 }

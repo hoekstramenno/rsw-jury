@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services\Calculators;
-
 
 use App\Models\HikeTime;
 use App\Models\Rating;
@@ -71,9 +69,9 @@ class TimeCorrection
     {
         $scores     = [];
         $ratings    = Rating::inYear($year)
-            ->whereIn('id', [70, 71, 75, 78])
-            ->with('scores')
-            ->get();
+                            ->whereIn('id', [70, 71, 75, 78])
+                            ->with('scores')
+                            ->get();
         $entryTheme = [
             3,
             5,
@@ -84,22 +82,19 @@ class TimeCorrection
         ];
 
         foreach ($ratings as $rating) {
-
             foreach ($rating->scores as $score) {
                 $totalScore      = $score->score * $rating->factor;
                 $teamStartNumber = $score->team->start_number;
 
-
-                if (isset($scores[ $teamStartNumber ][ $rating->label ])) {
-
-                    $scores[ $teamStartNumber ][ $rating->name ] += $totalScore;
+                if (isset($scores[$teamStartNumber][$rating->label])) {
+                    $scores[$teamStartNumber][$rating->name] += $totalScore;
                     continue;
                 }
 
-                $scores[ $teamStartNumber ][ $rating->name ] = $totalScore;
+                $scores[$teamStartNumber][$rating->name] = $totalScore;
 
                 if (in_array($teamStartNumber, $entryTheme)) {
-                    $scores[ $teamStartNumber ]['bonus'] = 40;
+                    $scores[$teamStartNumber]['bonus'] = 40;
                 }
             }
         }
@@ -114,10 +109,11 @@ class TimeCorrection
         //            echo $startNumber. "; " .  $score['total'] . '<br/>';
         //        }
         foreach ($scores as $startNumber => $score) {
-            $final[ $startNumber ] = array_reduce(
-                $score, static function ($carry, $score) {
-                return $carry + $score;
-            }
+            $final[$startNumber] = array_reduce(
+                $score,
+                static function ($carry, $score) {
+                    return $carry + $score;
+                }
             );
         }
         asort($final);
@@ -129,8 +125,7 @@ class TimeCorrection
         $quotients = [];
 
         foreach ($timesInSeconds as $groupNumber => $time) {
-            $quotients[ $groupNumber ] = $time / $fastest;
-
+            $quotients[$groupNumber] = $time / $fastest;
         }
 
         return $quotients;
@@ -141,9 +136,9 @@ class TimeCorrection
         $scores = [];
 
         foreach ($hikescores as $groupNumber => $score) {
-            $percentage             = 100 / $quotients[ $groupNumber ];
-            $newScore               = $score * ($percentage / 100);
-            $scores[ $groupNumber ] = floor($score - $newScore);
+            $percentage           = 100 / $quotients[$groupNumber];
+            $newScore             = $score * ($percentage / 100);
+            $scores[$groupNumber] = floor($score - $newScore);
         }
 
         return $scores;
@@ -184,20 +179,21 @@ class TimeCorrection
         }
 
         $ratings = Rating::whereHas(
-            'year', static function ($query) use ($year) {
-            $query->where('label', $year);
-        }
+            'year',
+            static function ($query) use ($year) {
+                $query->where('label', $year);
+            }
         )->with(['scores.team'])->whereIn('number', $ratingHikeIds)->get();
 
         foreach ($ratings as $rating) {
             foreach ($rating->scores as $score) {
                 $team = $score->team;
-                if (isset($hikeScores[ $team->id ])) {
-                    $hikeScores[ $team->id ]->addScore((int) round($score->score * $rating->factor));
+                if (isset($hikeScores[$team->id])) {
+                    $hikeScores[$team->id]->addScore((int)round($score->score * $rating->factor));
                     continue;
                 }
-                $hikeScores[ $team->id ] =
-                    (new HikeScore($score->team))->addScore((int) round($score->score * $rating->factor));
+                $hikeScores[$team->id] =
+                    (new HikeScore($score->team))->addScore((int)round($score->score * $rating->factor));
             }
         }
 
@@ -207,8 +203,7 @@ class TimeCorrection
     }
 
     /**
-     * @param int $year
-     *
+     * @param  int  $year
      * @return mixed
      */
     protected function getCountOfTotalTeams(int $year)

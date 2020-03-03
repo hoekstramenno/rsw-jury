@@ -1,0 +1,182 @@
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    font-size: 12px;
+}
+
+table.logbook {
+    .border-black-right {
+        border-right: 1px solid black;
+    }
+    th.vertical {
+        position: relative;
+        height: 280px;
+        width: 50px;
+    }
+
+    th.vertical > div > span {
+        transform-origin: 0 50%;
+        transform: rotate(-90deg);
+        -webkit-transform-origin: 0 50%;
+        -webkit-transform: rotate(-90deg);
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 250px;
+    }
+}
+
+table.results  {
+    th {
+        vertical-align: bottom;
+    }
+    th.rotate {
+        height: 220px;
+        white-space: nowrap;
+    }
+
+    th.rotate > div {
+        transform: translate(0, 0) rotate(270deg);
+        -webkit-transform: translate(0, 0) rotate(270deg);
+        width: 30px;
+    }
+    th.rotate > div > span {
+        padding: 5px 10px;
+    }
+}
+
+
+table {
+    border-spacing: 0;
+    border-collapse: separate;
+    width: 100%;
+    color: #314351;
+    line-height: 1em;
+    margin-bottom: 17px;
+    font-family: "museo-sans", sans-serif;
+
+    a {
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: none;
+            background-color: inherit;
+        }
+    }
+
+    th, td {
+        border: 1px solid #BCBABA;
+        border-top-color: #FFF;
+        border-right: none;
+        padding: 8px 5px;
+        text-align: left;
+        vertical-align: middle;
+        background: $white;
+        margin: 0;
+    }
+
+    th {
+        background: $primary;
+        text-align: left;
+        padding: 8px 5px;
+        color: white;
+        border-color: darken($primary, 10%);
+        font-weight: 900;
+
+        &:last-child {
+            border-right: 1px solid #BCBABA;
+        }
+    }
+
+    td {
+        &.last, &:last-child {
+            border-right: 1px solid #C2CAD0;
+        }
+    }
+
+    .even td, tr:nth-child(even) td {
+        background: #E7E7E7;
+    }
+}
+
+table.points {
+    table-layout: fixed;
+
+    th, td {
+        padding: 8px 5px;
+    }
+
+    td {
+        width: 10px;
+        max-width: 10px;
+    }
+
+    tr:nth-child(5n) {
+        td {
+            border-bottom: 2px solid black;
+        }
+    }
+
+    tr:last-child {
+        td {
+            border-bottom: 1px solid #BCBABA;
+        }
+    }
+}
+
+.cross {
+    position: absolute;
+    top: -5px;
+    width: 32px;
+    height: 32px;
+    left: -10px;
+}
+
+.cross:before, .cross:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: $red;
+}
+
+.cross:before {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.cross:after {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+
+
+
+@media screen, print {
+    /***Always insert a page break before the element***/
+    .page_break_before {
+        page-break-before: always !important;
+    }
+
+    /***Always insert a page break after the element***/
+    .page_break_after {
+        page-break-after: always !important;
+    }
+
+    /***Avoid page break before the element (if possible)***/
+    .page_break_before_avoid {
+        page-break-before: avoid !important;
+    }
+
+    /***Avoid page break after the element (if possible)***/
+    .page_break_after_avoid {
+        page-break-after: avoid !important;
+    }
+
+    /* Avoid page break inside the element (if possible) */
+    .page_break_inside_avoid {
+        page-break-inside: avoid !important;
+    }
+}

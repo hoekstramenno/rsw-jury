@@ -4,7 +4,7 @@
     <div class="container-fluid mb-3">
         <div class="row">
             <div class="col-12">
-                <table class="results">
+                <table class="results table table-striped">
                     <thead>
                     <tr>
                         <th class="text-center"></th>

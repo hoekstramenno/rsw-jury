@@ -1,21 +1,27 @@
 @extends('base')
 
 @section('content')
-    <div class="container">
-        <h1 class="mb-4">{{ $group->name }}</h1>
-    </div>
-    <div class="container">
+    <div class="container-fluid  dashboard-content">
         <div class="row">
-            <div class="px-3">
-                <canvas class="scores"></canvas>
+            @include('partials.page-title', [
+                'title' => $group->name,
+                'description' => $group->city
+            ])
+        </div>
+        <div class="row">
+            <div class="col-6">
+            @include('Components.Scores.bar', [
+                'title' => 'Totale score',
+                'data' => $totalScoreBar
+            ])
+            </div>
+            <div class="col-6">
+            @include('Components.Scores.line', [
+                'title' => 'Totale score',
+                'data' => $totalScoreBar
+            ])
             </div>
         </div>
     </div>
 @endsection
-
-@push('scripts')
-
-    <script src="{{ mix('js/group-line-chart.js')}}"></script>
-
-@endpush
 

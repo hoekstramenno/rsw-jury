@@ -1,11 +1,11 @@
 @extends('base')
 
 @section('content')
-    <div class="container">
-        <h1 class="mb-4">Beoordelingsformulier - RSW {{ $rating->year->label }}</h1>
-    </div>
-    <div class="container">
+    <div class="container-fluid  dashboard-content">
         <div class="row">
+            @include('partials.page-title', [
+                'title' => 'Beoordelingsformulier - RSW ' . $rating->year->label
+            ])
             <div class="px-3 d-inline-block float-left w-25">
                 <h2 style="padding-top: 25px; height:80px; width:80px;" class="rounded-circle bg-primary text-center text-white">{{ $rating->number. $rating->suffix }}</h2>
             </div>

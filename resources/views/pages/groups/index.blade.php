@@ -1,20 +1,23 @@
 @extends('base')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid  dashboard-content">
         <div class="row">
-            <div class="col">
-                <h1>Alle groepen</h1>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="page-header">
+                    <h2 class="pageheader-title">Groepen</h2>
+                    <p class="pageheader-text">Alle groepen uit de regio Haarlem</p>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <table>
+                <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Naam</th>
-                        <th>Plaats</th>
-                        <th>Details</th>
+                        <th scope="col">Naam</th>
+                        <th scope="col">Plaats</th>
+                        <th scope="col">Details</th>
                     </tr>
                     </thead>
                     <tbody>

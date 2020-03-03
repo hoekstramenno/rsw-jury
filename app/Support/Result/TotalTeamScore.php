@@ -44,7 +44,7 @@ class TotalTeamScore
         return $this->scores->sum();
     }
 
-    public function getPercentage()
+    public function getPercentage(): float
     {
         return $this->getTotal() / $this->getMaxScore() * 100;
     }
@@ -58,7 +58,7 @@ class TotalTeamScore
     {
         return [
             'team'       => $this->getTeam(),
-            'ratings' => $this->getScores(),
+            'scores'     => $this->getScores(),
             'total'      => $this->getTotal(),
             'percentage' => $this->getPercentage(),
             'max_score'  => $this->getMaxScore(),

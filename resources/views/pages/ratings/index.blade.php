@@ -1,15 +1,15 @@
 @extends('base')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid  dashboard-content">
         <div class="row">
-            <div class="col">
-                <h1>Alle beoordelingen voor jaar {{ $year }}</h1>
-            </div>
+            @include('partials.page-title', [
+                'title' => 'Alle beoordelingen voor jaar ' .  $year,
+            ])
         </div>
         <div class="row">
             <div class="col">
-                <table>
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th></th>

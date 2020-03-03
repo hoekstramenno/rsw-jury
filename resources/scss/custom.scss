@@ -1,0 +1,21 @@
+table.results  {
+    th {
+        vertical-align: bottom;
+    }
+    th.rotate {
+        height: 220px;
+        white-space: nowrap;
+    }
+
+    th.rotate > div {
+        transform: translate(0, 0) rotate(270deg);
+        width: 30px;
+    }
+    th.rotate > div > span {
+        padding: 5px 10px;
+    }
+}
+
+.nav-left-sidebar {
+    z-index: 2;
+}

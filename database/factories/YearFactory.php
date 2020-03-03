@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\Year;
 use Faker\Generator as Faker;
 
-$factory->define(App\Models\Year::class, function (Faker $faker) {
+$factory->define(
+    Year::class, function (Faker $faker) {
     return [
         'label' => $faker->year,
     ];

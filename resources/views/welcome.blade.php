@@ -85,8 +85,8 @@
                 </div>
 
                 <div class="links">
-                    @foreach ($years as $year)
-                        <a href="{{ route('dashboard', ['year' => $year->label]) }}">{{ $year->label }}</a>
+                    @foreach ($availableYears as $year)
+                        <a href="{{ route('year.change', ['year' => $year->label]) }}">{{ $year->label }}</a>
                     @endforeach
                 </div>
             </div>

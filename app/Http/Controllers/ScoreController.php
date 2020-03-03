@@ -29,7 +29,7 @@ class ScoreController extends Controller
 
     public function index(int $year)
     {
-        $ratings = Rating::inYear($year)->get();
+        $ratings = Rating::inYear($year)->with('year')->get();
 
         return view(
             'pages.scores.index',

@@ -1,37 +1,38 @@
 {
-    "name": "rswhaarlem/scoreboard",
+    "name": "scoutinghaarlem/rsw-scoreboard",
     "type": "project",
     "description": "Scoreboard application for RSW Haarlem",
     "keywords": [
-        "framework",
-        "laravel"
+        "scouting",
+        "haarlem",
+        "rsw"
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2.19",
+        "php": "^7.4.3",
         "ext-json": "*",
         "fideloper/proxy": "~4.0",
         "h4cc/wkhtmltopdf-amd64": "^0.12.4",
         "knplabs/knp-snappy": "^1.1",
-        "laravel/framework": "^6.0",
-        "laravel/tinker": "^1.0",
-        "maatwebsite/excel": "^3.1"
+        "laravel/framework": "^7.0",
+        "laravel/tinker": "^2.0",
+        "maatwebsite/excel": "^3.1",
+        "spatie/data-transfer-object": "^1.13"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.2",
-        "beyondcode/laravel-dump-server": "^1.3",
         "czim/phpunit-printer": "^0.9.1",
-        "facade/ignition": "^1.4",
+        "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^3.0",
-        "nunomaduro/larastan": "^0.4.3",
-        "nunomaduro/phpinsights": "^1.11",
+        "nunomaduro/collision": "^4.1",
         "phpunit/phpunit": "^8.0"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
+        "platform": {
+            "php": "7.4.3"
+        },
         "sort-packages": true
     },
     "extra": {
@@ -53,18 +54,6 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "scripts": {
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
-        ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
-        ]
-    }
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

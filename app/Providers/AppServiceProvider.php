@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use View;
 
@@ -15,6 +15,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//         View::share('years', DB::table('years')->get());
+        Blade::withoutComponentTags();
     }
 }

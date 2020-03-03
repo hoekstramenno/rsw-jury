@@ -2,46 +2,45 @@
 
 namespace App\Support\Result;
 
-use App\Models\Rating;
 use App\Models\Score;
 use Illuminate\Support\Collection;
 
 class TotalScore
 {
     /**
-     * @var Collection
+     * @var \Illuminate\Support\Collection<Score>
      */
-    protected $ratings;
+    protected $scores;
 
-    /**
-     * @var Collection
-     */
-    protected $teams;
-
-    public function __construct(Collection $ratings, Collection $teams)
+    public function __construct(Collection $teams)
     {
-        $this->ratings = $ratings;
-        $this->teams   = $teams;
+        $this->scores = collect([]);
+        $this->calculateScores($teams);
     }
 
-    public function calculate(): Collection
+    protected function calculateScores(Collection $teams): void
     {
-        $finalResults = collect([]);
-
-        foreach ($this->teams as $team) {
+        foreach ($teams as $team) {
             $totalTeamScore = new TotalTeamScore($team);
 
             $team->scores->each(
                 function (Score $score) use ($totalTeamScore) {
-                    $totalTeamScore->addScore($score->rating, $score->score * $score->rating->factor);
+                    $totalTeamScore->addScore($score->rating, (int) ($score->score * $score->rating->factor));
                 }
             );
             /** @var TotalTeamScore $totalTeamScore */
-            $finalResults->add($totalTeamScore);
+            $this->scores->add($totalTeamScore);
         }
+    }
 
-        return $finalResults->sortByDesc(function(TotalTeamScore $teamScore) {
-            return $teamScore->getTotal();
-        })->values();
+    public function sortByTotalScore(string $direction = 'DESC'): Collection
+    {
+        return $this->scores->sortBy(
+            function (TotalTeamScore $teamScore) {
+                return $teamScore->getTotal();
+            },
+            SORT_REGULAR,
+            $direction === 'DESC'
+        )->values();
     }
 }

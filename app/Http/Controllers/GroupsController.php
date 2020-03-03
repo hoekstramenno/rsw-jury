@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Group;
 use App\Models\RatingCategory;
+use App\Support\Statistics\ChartData;
+use App\Support\Statistics\GroupCategoryStatistics;
+use App\Support\Statistics\GroupStatistics;
+use App\Support\Statistics\TeamStatistics;
 
 class GroupsController extends Controller
 {
@@ -11,43 +15,48 @@ class GroupsController extends Controller
     {
         $groups = Group::all();
 
-        return view('pages.groups.index', [
-            'groups' => $groups,
-        ]);
+        return view(
+            'pages.groups.index',
+            [
+                'groups' => $groups,
+            ]
+        );
     }
 
     public function show(string $id)
     {
-        $group      = Group::with('teams.scores')->where('id', $id)->firstOrFail();
-        $categories = RatingCategory::orderBy('id', 'asc')->get()->pluck('name');
+        /** @var Group $group */
+        $group = Group::with(['teams.scores', 'teams.year'])->where('id', $id)->firstOrFail();
 
-        $scoresByYear = [];
-        $scores       = [];
+        $totalScoreBar = new GroupStatistics($group);
+        $barChart      = $this->createTotalScoreBarChart($totalScoreBar);
 
-        foreach ($group->teams as $team) {
-            foreach ($team->scores as $score) {
-                if (isset($scoresByYear[$team->year->label][$score->rating->ratingCategory->id])) {
-                    $scoresByYear[$team->year->label][$score->rating->ratingCategory->id] += $score->score *
-                                                                                             $score->rating->factor;
-                    continue;
-                }
-                $scoresByYear[$team->year->label][$score->rating->ratingCategory->id] =
-                    $score->score * $score->rating->factor;
-            }
-        }
+        return view(
+            'pages.groups.show',
+            [
+                'group'         => $group,
+                'totalScoreBar' => $barChart->toGraphData(),
+            ]
+        );
+    }
 
-        foreach ($scoresByYear as $year => $scoresGroup) {
-            ksort($scoresGroup);
-            $scores[] = [
-                'data'  => $scoresGroup,
-                'label' => $year,
-            ];
-        }
+    protected function createTotalScoreBarChart(GroupStatistics $totalScoreBar): ChartData
+    {
+        $perYear  = $totalScoreBar->getTotalScorePerYear();
+        $datasets = collect([]);
+        $datasets->add(
+            [
+                'data'            => $perYear->values(),
+                'label'           => 'Totale score per jaar',
+                'borderColor'     => 'rgba(244, 143, 177, 0.8)',
+                'backgroundColor' => 'rgba(244, 143, 177, 0.8)',
+                'fill'            => false,
+            ]
+        );
 
-        return view('pages.groups.show', [
-            'group'      => $group,
-            'scores'     => json_encode($scores),
-            'categories' => $categories,
-        ]);
+        return new ChartData(
+            $perYear->keys(),
+            $datasets
+        );
     }
 }

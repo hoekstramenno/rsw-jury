@@ -1,22 +1,25 @@
 @extends('base')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid  dashboard-content">
         <h1 class="mb-4">Beoordelingsformulier - RSW {{ $rating->year->label }}</h1>
-    </div>
-    <div class="container">
+
         <div class="row">
             <div class="px-3 d-inline-block float-left w-25">
                 <h2 style="padding-top: 25px; height:80px; width:80px;" class="rounded-circle bg-primary text-center text-white">{{ $rating->number. $rating->suffix }}</h2>
             </div>
             <div class="px-3 d-inline-block float-left w-75">
-                <table>
+                <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th colspan="2">{{ $rating->id }} {{ $rating->name }}</th>
+                        <th colspan="2"><h3>{{ $rating->name }}</h3></th>
                     </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                        <td>Id</td>
+                        <td class="last">{{ $rating->id }}</td>
+                    </tr>
                     <tr>
                         <td class="w-25 first">Categorie</td>
                         <td class="last">{{ $rating->ratingCategory->name }}</td>
@@ -28,10 +31,6 @@
                     <tr>
                         <td class="w-25 first">Punten</td>
                         <td class="last">{{ $rating->points }}</td>
-                    </tr>
-                    <tr>
-                        <td class="w-25 first">Categorie</td>
-                        <td class="last">{{ $rating->ratingCategory->name }}</td>
                     </tr>
                     <tr>
                         <td class="w-25 first">Telt mee</td>
@@ -77,13 +76,12 @@
                     </div>
                 @endif
             </div>
-        </div>
-    @endif
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <a href="{{ route('ratings.index', ['year' => $rating->year->label])}}"><< Terug naar {{ $rating->year->label }}</a>
+            <div class="row">
+                <div class="col my-3">
+                    <a class="btn btn-primary" href="{{ route('ratings.index', ['year' => $rating->year->label])}}"><< Terug naar {{ $rating->year->label }}</a>
+                </div>
             </div>
         </div>
-    </div>
+
+    @endif
 @endsection

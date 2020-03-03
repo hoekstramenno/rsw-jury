@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property mixed start_nr
- * @property mixed group
- * @property mixed name
+ * @property int $start_nr
+ * @property \App\Models\Group $group
+ * @property string $name
  */
 class Team extends Model
 {

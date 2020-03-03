@@ -44,9 +44,9 @@ class TotalScoreTest extends TestCase
             });
         });
 
-        $totalScore = new TotalScore($ratings, $teams);
+        $totalScore = new TotalScore($teams);
 
-        $results = $totalScore->calculate();
+        $results = $totalScore->sortByTotalScore();
 
         static::assertInstanceOf(Collection::class, $results);
         static::assertCount(2, $results);

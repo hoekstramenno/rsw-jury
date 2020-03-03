@@ -52,8 +52,6 @@ class RatingController extends Controller
 
         $printableRating->addData('teams', $teams);
 
-        //        return View::make($printableRating->getTemplateName(), ['data' => $printableRating->getData()])->render();
-
         return response($this->pdf->render($printableRating, $options))->withHeaders(
             [
                 'Content-Type'        => 'application/pdf',
@@ -72,13 +70,6 @@ class RatingController extends Controller
             ->with(['printView', 'year', 'ratingCategory', 'criteria', 'definitions', 'year'])
             ->firstOrFail();
     }
-
-
-    protected function getCountOfTotalTeams(int $year): int
-    {
-        return Team::inYear($year)->count();
-    }
-
 
     protected function getAllActiveTeamsOfYear(int $year)
     {

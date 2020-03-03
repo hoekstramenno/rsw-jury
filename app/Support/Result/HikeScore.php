@@ -21,24 +21,8 @@ class HikeScore
         $this->team = $team;
     }
 
-    public function addScore(int $score): HikeScore
+    public function getTime(): string
     {
-        $this->scores[] = $score;
-
-        return $this;
-    }
-
-    public function getTeam(): Team
-    {
-        return $this->team;
-    }
-
-    public function getTotalScore(): int
-    {
-        return collect($this->scores)->reduce(
-            function ($carry, $score) {
-                return $carry + $score;
-            }
-        );
+        return '00:00';
     }
 }

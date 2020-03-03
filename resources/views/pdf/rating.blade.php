@@ -45,9 +45,11 @@
                 <br/>
                 <br/>Omcirkel het aantal punten<br/>
                 Dus zo:
-                <div style="width:20px; height: 20px;" class="d-inline-block text-center rounded-circle border border-success">8</div>
+                <div style="width:25px; height: 25px;" class="d-inline-block text-center rounded-circle border border-success">
+                    <span>8</span>
+                </div>
                 en niet zo
-                <div class="d-inline-block position-relative">
+                <div class="d-inline-block position-relative cross-container">
                     8
                     <span class="cross"></span>
                 </div>

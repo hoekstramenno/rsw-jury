@@ -16,7 +16,8 @@
         "knplabs/knp-snappy": "^1.1",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "maatwebsite/excel": "^3.1"
+        "maatwebsite/excel": "^3.1",
+        "spatie/data-transfer-object": "^1.13"
     },
     "require-dev": {
         "czim/phpunit-printer": "^0.9.1",

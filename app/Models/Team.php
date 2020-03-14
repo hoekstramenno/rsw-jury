@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $start_nr
@@ -38,6 +39,11 @@ class Team extends Model
     public function scores(): HasMany
     {
         return $this->hasMany(Score::class);
+    }
+
+    public function hiketime(): HasOne
+    {
+        return $this->hasOne(HikeTime::class);
     }
 
     public function scopeInYear(Builder $query, int $year): Builder

@@ -2,18 +2,40 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property \Carbon\Carbon $start
+ * @property \Carbon\Carbon $end
+ */
 class HikeTime extends Model
 {
-    protected $fillable = ['time', 'year_id', 'team_id'];
-    public function team(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
+
+
+    /**
+     * @var array
+     */
+    protected $fillable = ['start', 'end', 'team_id'];
+
+    public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
-    public function year(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function getDifference(): string
     {
-        return $this->belongsTo(Year::class);
+        $time = Carbon::parse($this->start)->floatDiffInRealHours($this->end);
+        return floor($time) . ':' . (($time * 60) % 60);
+    }
+
+    public function inMinutes(): int
+    {
+        return (int) ceil(arbon::parse($this->start)->floatDiffInMinutes($this->end));
     }
 }

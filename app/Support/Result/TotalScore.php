@@ -35,8 +35,7 @@ class TotalScore
 
     public function sortByTotalScore(string $direction = 'DESC'): Collection
     {
-        return $this->scores->sortBy(
-            function (TotalTeamScore $teamScore) {
+        return $this->scores->sortBy(function (TotalTeamScore $teamScore) {
                 return $teamScore->getTotal();
             },
             SORT_REGULAR,

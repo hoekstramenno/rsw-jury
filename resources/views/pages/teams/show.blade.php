@@ -38,7 +38,5 @@
                 'data' => $radar
             ])
         </div>
-
-
     </div>
 @endsection

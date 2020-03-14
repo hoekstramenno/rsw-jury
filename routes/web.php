@@ -19,7 +19,8 @@ Route::get('{year}/ratings/pdf/{formNumber}/{suffix?}', 'Pdf\RatingController')-
 Route::get('{year}/ratings/{formNumber}/{suffix?}', 'RatingController@show')->name('ratings.show');
 
 Route::get('{year}/scores', 'ScoreController@index')->name('scores.index');
-Route::get('{year}/scores/hiketimes', 'ScoreController@calculateHikeScores')->name('hike.calculate.times');
+Route::get('{year}/scores/hike-times', 'HikeController@edit')->name('hike.times.edit');
+Route::post('scores/hike-times/{teamId}', 'HikeController@store')->name('hike.times.store');
 Route::get('{year}/scores/theme', 'ScoreController@calculateThemeScores')->name('score.calculate.theme');
 
 Route::get('{year}/scores/{formNumber}/{suffix?}', 'ScoreController@show')->name('scores.show');

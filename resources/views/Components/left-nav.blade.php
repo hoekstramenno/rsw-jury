@@ -23,7 +23,7 @@
                         Uitslagen
                     </li>
                     <li class="nav-item">
-                        <a class="{{ (strpos(Route::currentRouteName(), 'hike.calculate.times') === 0) ? 'active' : '' }} nav-link" href="{{ route('hike.calculate.times', ['year' => $currentYear]) }}"><i class="fa fa-fw fa-rocket"></i> Hike uitslag</a>
+                        <a class="{{ (strpos(Route::currentRouteName(), 'hike.times.edit') === 0) ? 'active' : '' }} nav-link" href="{{ route('hike.times.edit', ['year' => $currentYear]) }}"><i class="fa fa-fw fa-rocket"></i> Hike uitslag</a>
                     </li>
                     <li class="nav-item">
                         <a class="{{ (strpos(Route::currentRouteName(), 'score.calculate.theme') === 0) ? 'active' : '' }} nav-link" href="{{ route('score.calculate.theme', ['year' => $currentYear]) }}"><i class="fa fa-fw fa-rocket"></i> Thema uitslag</a>

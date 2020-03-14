@@ -20,13 +20,8 @@ class CreateHikeTimesTable extends Migration
                   ->references('id')
                   ->on('teams')
                   ->onDelete('cascade');
-            $table->unsignedBigInteger('year_id');
-            $table->foreign('year_id')
-                  ->references('id')
-                  ->on('years')
-                  ->onDelete('cascade');
-            $table->unsignedInteger('time');
-            $table->timestamps();
+            $table->time('start');
+            $table->time('end');
         });
     }
 
